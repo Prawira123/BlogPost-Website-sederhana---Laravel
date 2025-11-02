@@ -15,12 +15,14 @@
         </button>
       </div>
       <div class="hidden lg:flex lg:gap-x-12">
-        <a href="#" class="text-sm/6 font-semibold text-white">Product</a>
+        <a href="{{ route('membership.homepage') }}" class="text-sm/6 font-semibold text-white">Blog</a>
         <a href="#" class="text-sm/6 font-semibold text-white">Features</a>
         <a href="#" class="text-sm/6 font-semibold text-white">Marketplace</a>
         <a href="{{ route('membership.posts') }}" class="text-sm/6 font-semibold text-white">Profile</a>
+        
       </div>
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+      <div class="hidden lg:flex lg:flex-1 lg:justify-end lg:space-x-2">
+        @yield('navbar-item')
        <form action="{{ route('logout') }}" method="POST">
           @csrf
           {{-- <button type="submit" class="bg-white w-full h-auto p-2 text-black">Log Out</button> --}}

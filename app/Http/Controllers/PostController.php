@@ -26,8 +26,9 @@ class PostController extends Controller
 
     public function postsMember(){
         $posts = Auth::user()->posts()->get();
+        $user = Auth::user();
 
-        return view('membership.postsPage', compact('posts'));
+        return view('membership.profilePage', compact(['posts', 'user']));
     }
 
 }

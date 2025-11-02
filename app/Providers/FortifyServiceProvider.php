@@ -1,4 +1,5 @@
 <?php
+
     namespace App\Providers;
 
     use App\Actions\Fortify\CreateNewUser;
@@ -14,7 +15,8 @@
     use Laravel\Fortify\Fortify;
     use Laravel\Fortify\Contracts\LoginResponse;
     use Laravel\Fortify\Contracts\LogoutResponse;
-
+use Laravel\Fortify\Contracts\RegisterResponse;
+use Laravel\Fortify\Contracts\RegisterViewResponse;
 
 
     class FortifyServiceProvider extends ServiceProvider
@@ -25,6 +27,12 @@
         public function register(): void
         {
             $this->app->instance(LoginResponse::class, new class implements LoginResponse {
+                public function toResponse($request)
+                {
+                    return redirect()->route('membership.homepage');
+                }
+            });
+            $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
                 public function toResponse($request)
                 {
                     return redirect()->route('membership.homepage');

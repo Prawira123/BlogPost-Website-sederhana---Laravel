@@ -21,6 +21,18 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'imageProfile',
+        'phone',
+        'address',
+        'bio',
+        'role',
+    ];
+
     public function definition(): array
     {
         return [

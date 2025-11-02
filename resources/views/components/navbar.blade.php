@@ -18,12 +18,10 @@
         <a href="#" class="text-sm/6 font-semibold text-white">Product</a>
         <a href="#" class="text-sm/6 font-semibold text-white">Features</a>
         <a href="#" class="text-sm/6 font-semibold text-white">Marketplace</a>
-        <a href="#" class="text-sm/6 font-semibold text-white">Company</a>
       </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <a href="{{ route('login') }}" class="text-sm/6 font-semibold text-white">Log in <span aria-hidden="true">&rarr;</span></a>
+        <a href="{{ route('login') }}" class="text-sm/6 font-semibold text-white bg-white/5 rounded-full px-3.5 py-1.5 hover:bg-white/10 p-10">Log in <span aria-hidden="true">&rarr;</span></a>
       </div>
-      
     </nav>
     <el-dialog>
       <dialog id="mobile-menu" class="backdrop:bg-transparent lg:hidden">

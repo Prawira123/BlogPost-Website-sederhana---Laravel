@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->createMany([
             [
             'name' => 'Prawira Winata',
-            'email' => 'prawirawinata123@gmail.com',
+            'email' => 'prawirawinata1234@gmail.com',
             ],
             [
             'name' => 'Erick Gans',
