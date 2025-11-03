@@ -22,25 +22,21 @@ class UserFactory extends Factory
      * @return array<string, mixed>
      */
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'imageProfile',
-        'phone',
-        'address',
-        'bio',
-        'role',
-    ];
-
     public function definition(): array
     {
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
+            'imageProfile' => 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png',
+            'phone' => "08123456789",
+            'address' => fake()->address(),
+            'bio' => fake()->sentence(),
+            'role' => "member",
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 

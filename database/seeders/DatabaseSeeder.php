@@ -17,26 +17,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::factory(10)->create();
 
-        User::factory()->createMany([
-            [
-            'name' => 'Prawira Winata',
-            'email' => 'prawirawinata1234@gmail.com',
-            ],
-            [
-            'name' => 'Erick Gans',
-            'email' => 'erick123@gmail.com',
-            ],
-            [
-            'name' => 'Fans Emyu',
-            'email' => 'kingemyujuara@gmail.com',
-            ],
-        ]);
+        // User::factory()->createMany([
+        //     [
+        //     'name' => 'Prawira Winata',
+        //     'email' => 'prawirawinata1234@gmail.com',
+        //     ],
+        //     [
+        //     'name' => 'Erick Gans',
+        //     'email' => 'erick123@gmail.com',
+        //     ],
+        //     [
+        //     'name' => 'Fans Emyu',
+        //     'email' => 'kingemyujuara@gmail.com',
+        //     ],
+        // ]);
 
         $this->call([
                     CategorySeeder::class,
                     PostSeeder::class,
+                    CommentSeeder::class
                 ]
         );
     }
