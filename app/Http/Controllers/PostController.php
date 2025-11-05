@@ -18,7 +18,7 @@ class PostController extends Controller
 
     public function index(){
         $posts = Post::with('user', 'category')->get();
-        return view('post.allPost', compact('posts'));
+        return view('guest.allPost', compact('posts'));
     }
     public function indexMembership(){
         $posts = Post::with('user', 'category')->get();
@@ -40,8 +40,25 @@ class PostController extends Controller
         ->take(3)
         ->get();
 
-        $comments = $post->comments()->get();
+        $comments = $post->comments()->with('user')
+            ->orderByDesc('created_at')
+            ->get();
+
         return view('membership.blogPage', compact('post', 'comments', 'relatedPosts'));
     }
+    
+    public function detailPostGuest($id){
+        $post = Post::with('user', 'category', 'comments')->find($id);
+        $relatedPosts = Post::where('user_id', $post->user_id)
+        ->where('id', '!=', $post->id)
+        ->latest()
+        ->take(3)
+        ->get();
 
+        $comments = $post->comments()->with('user')
+            ->orderByDesc('created_at')
+            ->get();
+
+        return view('membership.blogPage', compact('post', 'comments', 'relatedPosts'));
+    }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.detailBlog')
 
-<x-navbar-member></x-navbar-member>
+<x-navbar></x-navbar>
 
 @section('content')
 
