@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,19 +19,9 @@ class PostController extends Controller
     ];
 
     public function index(){
-        $posts = Post::with('user', 'category')->get();
+        $posts = Post::with('user', 'category')->orderByDesc('created_at')
+            ->get();
         return view('guest.allPost', compact('posts'));
-    }
-    public function indexMembership(){
-        $posts = Post::with('user', 'category')->get();
-        return view('membership.homepage', compact('posts'));
-    }
-
-    public function postsMember(){
-        $posts = Auth::user()->posts()->get();
-        $user = Auth::user();
-
-        return view('membership.profilePage', compact(['posts', 'user']));
     }
 
     public function detailPost($id){
@@ -46,19 +38,78 @@ class PostController extends Controller
 
         return view('membership.blogPage', compact('post', 'comments', 'relatedPosts'));
     }
-    
-    public function detailPostGuest($id){
-        $post = Post::with('user', 'category', 'comments')->find($id);
-        $relatedPosts = Post::where('user_id', $post->user_id)
-        ->where('id', '!=', $post->id)
-        ->latest()
-        ->take(3)
-        ->get();
 
-        $comments = $post->comments()->with('user')
-            ->orderByDesc('created_at')
-            ->get();
+    public function addBlog(){
+        $categories = Category::all();
 
-        return view('membership.blogPage', compact('post', 'comments', 'relatedPosts'));
+        return view('user.storeBlog', compact('categories'));
     }
+
+    public function store(Request $request){
+         $request->validate([
+        'title' => 'required|string|max:255',
+        'content' => 'required',
+        'thumbnail' => 'required|string',
+        'category' => 'required|exists:categories,id',
+        ]);
+
+        $user = auth()->user();
+
+        $user->posts()->create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'thumbnail' => $request->thumbnail,
+            'category_id' => $request->category,
+            'slug' => Str::slug($request->title),
+        ]);
+
+        return redirect()->route('membership.homepage');
+    }
+
+    public function edit($id){
+        $post = Post::with('user', 'category')->find($id);
+        $categories = Category::all();
+        return view('user.editBlog', compact('post', 'categories'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required',
+            'thumbnail' => 'required|string',
+            'category' => 'required|exists:categories,id',
+        ]);
+
+        $user = auth()->user();
+        $post = $user->posts()->findOrFail($id); // hanya post milik user login
+
+        // Generate slug unik
+        $slug = Str::slug($request->title);
+        $original = $slug;
+        $count = 1;
+
+        while (Post::where('slug', $slug)->where('id', '!=', $post->id)->exists()) {
+            $slug = "{$original}-{$count}";
+            $count++;
+        }
+
+        // Update data
+        $post->update([
+            'title' => $request->title,
+            'content' => $request->content,
+            'thumbnail' => $request->thumbnail,
+            'category_id' => $request->category,
+            'slug' => $slug,
+        ]);
+
+        return redirect()->route('membership.homepage')->with('success', 'Post updated successfully.');
+    }
+    
+    public function delete($id){
+        $post = Post::find($id);
+        $post->delete();
+        return redirect()->route('membership.homepage')->with('success', 'Post deleted successfully.');
+    }
+    
 }

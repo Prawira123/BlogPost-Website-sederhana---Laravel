@@ -18,7 +18,7 @@
         <a href="{{ route('membership.homepage') }}" class="text-sm/6 font-semibold text-white">Blog</a>
         <a href="#" class="text-sm/6 font-semibold text-white">Features</a>
         <a href="#" class="text-sm/6 font-semibold text-white">Marketplace</a>
-        <a href="{{ route('membership.posts') }}" class="text-sm/6 font-semibold text-white">Profile</a>
+        <a href="{{ route('membership.profilePage') }}" class="text-sm/6 font-semibold text-white">Profile</a>
         
       </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end lg:space-x-2">

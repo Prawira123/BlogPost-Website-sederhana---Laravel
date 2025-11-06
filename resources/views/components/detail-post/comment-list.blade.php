@@ -4,7 +4,7 @@
         <p class="inline-flex items-center mr-3 font-semibold text-sm text-gray-900 dark:text-white"><img
                 class="mr-2 w-6 h-6 rounded-full"
                 src="{{ $imageProfile }}"
-                alt="Michael Gough">{{ $username }}</p>
+                alt="Michael Gough"><a class="hover:underline" href="{{ route('guest.profilePage', $iduser) }}">{{ $username }}</a></p>
         <p class="text-sm text-gray-600 dark:text-gray-400">{{ $date }}</p>
     </div>
     <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1"

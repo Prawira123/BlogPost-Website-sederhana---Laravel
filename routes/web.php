@@ -2,15 +2,25 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\GuestController;
 use App\Http\Controllers\CommentController;
 
 Route::get('/', [PostController::class, 'index'])->name('homepage');
-Route::get('/membership/homepage', [PostController::class, 'indexMembership'])->name('membership.homepage');
-Route::get('/membership/profile', [PostController::class, 'postsMember'])->name('membership.posts');
-Route::get('/membership/post/{id}', [PostController::class, 'detailPost'])->name('membership.detailPost');
-Route::get('/homepage/post/{id}', [PostController::class, 'detailPostGuest'])->name('membership.detailPost');
-Route::post('/membership/post/{post}/comments', [CommentController::class, 'store'])->middleware('auth')->name('membership.comment.store');
 
-// Route::get('/login' , function(){
-//     return view('auth.login');
-// })->name('loginPage');
+Route::get('/homepage/post/{id}', [GuestController::class, 'detailPostGuest'])->name('guest.detailPost');
+Route::get('/profilePage/{id}', [GuestController::class, 'detailProfile'])->name('guest.profilePage');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/membership/homepage', [UserController::class, 'indexMembership'])->name('membership.homepage');
+    Route::get('/membership/profile', [UserController::class, 'detail'])->name('membership.profilePage');
+    Route::get('/membership/post/{id}', [PostController::class, 'detailPost'])->name('membership.detailPost');
+    Route::post('/membership/post/{post}/comments', [CommentController::class, 'store'])->name('membership.comment.store');
+    Route::get('/membership/profilePage/edit', [UserController::class,'edit'])->name('user.edit');
+    Route::put('/membership/profilePage', [UserController::class, 'update'])->name('user.update');
+    Route::get('/membership/addBlog', [PostController::class, 'addBlog'])->name('membership.addBlog');
+    Route::post('/membership/storeBlog', [PostController::class, 'store'])->name('post.store');
+    Route::get('/membership/editBlog/{id}', [PostController::class, 'edit'])->name('membership.editBlog');
+    Route::put('/membership/updateBlog/{id}', [PostController::class, 'update'])->name('post.update');
+    Route::delete('/membership/deleteBlog/{id}', [PostController::class, 'delete'])->name('post.delete');
+});
