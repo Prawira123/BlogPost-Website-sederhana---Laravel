@@ -53,6 +53,10 @@
         </div>
 
         <section class="mt-20">
+            @yield('searchForm')
+        </section>
+
+        <section class="mt-20">
             @yield('post')
         </section>
 

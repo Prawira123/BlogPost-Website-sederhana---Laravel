@@ -17,7 +17,7 @@
     <img src="{{ $img }}" alt="" class="size-10 rounded-full bg-gray-800" />
     <div class="text-sm/6">
     <p class="font-semibold text-white">
-        <a href="{{ route('guest.profilePage', $iduser) }}" class="hover:underline">
+        <a href="{{ $link }}" class="hover:underline">
         <span class="absolute inset-0"></span>
         {{ $name }}
         </a>

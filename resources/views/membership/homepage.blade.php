@@ -6,6 +6,10 @@
     
 </x-navbar-member>
 
+@section('searchForm')
+  <x-searchingForm></x-searchingForm>
+@endsection
+
 @section('post')
 <div class="bg-gray-900 py-24 sm:py-32">
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
@@ -18,6 +22,19 @@
             <x-card-post :title="$post->title" :content="$post->content" :date="$post->created_at->format('d M Y')" :img="$post->user->imageProfile" :name="$post->user->name" :category="$post->category->name"
               :id="$post->id" :address="$post->user->address" :iduser="$post->user->id" :thumbnail="$post->thumbnail">
               {{ route('membership.detailPost', $post->id) }}
+               <x-slot name="link">
+                @auth
+                    @if (Auth::id() === $post->user->id)
+                        {{ route('membership.profilePage', $post->user->id) }}
+                    @else
+                        {{ route('guest.profilePage', $post->user->id) }}
+                    @endif
+                @endauth
+
+                @guest
+                    {{ route('guest.profilePage', $post->user->id) }}
+                @endguest
+               </x-slot>
           </x-card-post>
         @endforeach
     </div>

@@ -11,6 +11,8 @@ Route::get('/', [PostController::class, 'index'])->name('homepage');
 Route::get('/homepage/post/{id}', [GuestController::class, 'detailPostGuest'])->name('guest.detailPost');
 Route::get('/profilePage/{id}', [GuestController::class, 'detailProfile'])->name('guest.profilePage');
 
+Route::get('/searchingPost', [PostController::class, 'searchingPost'])->name('searchingPost');
+
 Route::middleware('auth')->group(function () {
     Route::get('/membership/homepage', [UserController::class, 'indexMembership'])->name('membership.homepage');
     Route::get('/membership/profile', [UserController::class, 'detail'])->name('membership.profilePage');

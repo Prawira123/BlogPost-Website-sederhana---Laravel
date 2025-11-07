@@ -54,6 +54,21 @@
             @foreach ($posts as $post)
                 <x-card-post :title="$post->title" :content="$post->content" :date="$post->created_at->format('d M Y')" :img="$post->user->imageProfile" :name="$post->user->name" :category="$post->category->name" :id="$post->id" :iduser="$post->user->id" :address="$post->user->address" :thumbnail="$post->thumbnail">
                 {{ route('membership.detailPost', $post->id) }}
+
+                <x-slot name="link">
+                @auth
+                    @if (Auth::id() === $post->user->id)
+                        {{ route('membership.profilePage', $post->user->id) }}
+                    @else
+                        {{ route('guest.profilePage', $post->user->id) }}
+                    @endif
+                @endauth
+
+                @guest
+                    {{ route('guest.profilePage', $post->user->id) }}
+                @endguest
+               </x-slot>
+
                 </x-card-post>
             @endforeach
         </div>

@@ -111,5 +111,22 @@ class PostController extends Controller
         $post->delete();
         return redirect()->route('membership.homepage')->with('success', 'Post deleted successfully.');
     }
+
+    public function searchingPost(Request $request){
+        $search = $request->input('search');
+
+        $posts = Post::with(['user', 'category'])->when($search, function($query, $search){
+            return $query->where('title', 'like', "%{$search}%")
+            ->orWhere('content', 'like', "%{$search}%")
+            ->orWhereHas('category', function($q) use ($search){
+                $q->where('name', 'like', "%{$search}%");
+            })
+            ->orWhereHas('user', function($q) use ($search){
+                $q->where('name', 'like', "%{$search}%");
+            })->latest()->get();
+        });
+
+        return view('membership.homepage', compact('posts', 'search'));
+    }
     
 }

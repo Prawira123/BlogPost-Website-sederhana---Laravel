@@ -16,7 +16,7 @@
       </div>
       <div class="hidden lg:flex lg:gap-x-12">
         <a href="{{ route('membership.homepage') }}" class="text-sm/6 font-semibold text-white">Blog</a>
-        <a href="#" class="text-sm/6 font-semibold text-white">Features</a>
+        <a href="#" class="text-sm/6 font-semibold text-white">Authors</a>
         <a href="#" class="text-sm/6 font-semibold text-white">Marketplace</a>
         <a href="{{ route('membership.profilePage') }}" class="text-sm/6 font-semibold text-white">Profile</a>
         

@@ -26,6 +26,6 @@ class GuestController extends Controller
             ->orderByDesc('created_at')
             ->get();
 
-        return view('membership.blogPage', compact('post', 'comments', 'relatedPosts'));
+        return view('guest.blogPage', compact('post', 'comments', 'relatedPosts'));
     }
 }
