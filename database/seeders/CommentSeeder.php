@@ -24,7 +24,7 @@ class CommentSeeder extends Seeder
             return;
         }
 
-        Comment::factory(200)->state(function () use ($users, $post) {
+        Comment::factory(2000)->state(function () use ($users, $post) {
             return [
                 'user_id' => $users->random()->id,
                 'post_id' => $post->random()->id,

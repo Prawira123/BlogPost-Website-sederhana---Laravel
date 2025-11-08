@@ -51,4 +51,36 @@ class UserController extends Controller
         return $this->detail();
 
     }
+
+    public function index(){
+        $authors = User::withCount('posts')->orderByDesc('posts_count')->get();
+        return view('membership.authorsPage', compact('authors'));
+    }
+
+    public function searchingAuthor(Request $request){
+        $search = $request->input('search');
+
+        $authors = User::withCount('posts')->when($search, function($query, $search){
+            return $query->where('name', 'like', "%{$search}%");
+        })->orderByDesc('posts_count')->latest()->get();
+
+        return view('membership.authorsPage', compact('authors', 'search'));
+    }
+
+    public function searchingPost(Request $request){
+        $search = $request->input('search');
+
+        $posts = Post::with(['user', 'category'])->when($search, function($query, $search){
+            return $query->where('title', 'like', "%{$search}%")
+            ->orWhere('content', 'like', "%{$search}%")
+            ->orWhereHas('category', function($q) use ($search){
+                $q->where('name', 'like', "%{$search}%");
+            })
+            ->orWhereHas('user', function($q) use ($search){
+                $q->where('name', 'like', "%{$search}%");
+            })->latest()->get();
+        });
+
+        return view('membership.homepage', compact('posts', 'search'));
+    }
 }

@@ -25,7 +25,7 @@ class PostSeeder extends Seeder
             return;
         }
 
-        Post::factory(20)->state(function () use ($users, $categories) {
+        Post::factory(100)->state(function () use ($users, $categories) {
             return [
                 'user_id' => $users->random()->id,
                 'category_id' => $categories->random()->id,

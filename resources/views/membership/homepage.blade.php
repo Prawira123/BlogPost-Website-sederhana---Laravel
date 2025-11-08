@@ -7,7 +7,9 @@
 </x-navbar-member>
 
 @section('searchForm')
-  <x-searchingForm></x-searchingForm>
+  <x-searchingForm>Blog
+    <x-slot name="link">{{ route('searchingPost') }}</x-slot>
+  </x-searchingForm>
 @endsection
 
 @section('post')

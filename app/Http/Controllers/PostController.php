@@ -126,7 +126,17 @@ class PostController extends Controller
             })->latest()->get();
         });
 
-        return view('membership.homepage', compact('posts', 'search'));
+        return view('guest.allPost', compact('posts', 'search'));
+    }
+
+    public function searchingAuthor(Request $request){
+        $search = $request->input('search');
+
+        $authors = User::withCount('posts')->when($search, function($query, $search){
+            return $query->where('name', 'like', "%{$search}%");
+        })->orderByDesc('posts_count')->latest()->get();
+
+        return view('guest.authorsPage', compact('authors', 'search'));
     }
     
 }

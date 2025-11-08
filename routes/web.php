@@ -12,6 +12,8 @@ Route::get('/homepage/post/{id}', [GuestController::class, 'detailPostGuest'])->
 Route::get('/profilePage/{id}', [GuestController::class, 'detailProfile'])->name('guest.profilePage');
 
 Route::get('/searchingPost', [PostController::class, 'searchingPost'])->name('searchingPost');
+Route::get('/searchingAuthors', [PostController::class, 'searchingAuthor'])->name('searchingAuthors');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/membership/homepage', [UserController::class, 'indexMembership'])->name('membership.homepage');
@@ -25,4 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/membership/editBlog/{id}', [PostController::class, 'edit'])->name('membership.editBlog');
     Route::put('/membership/updateBlog/{id}', [PostController::class, 'update'])->name('post.update');
     Route::delete('/membership/deleteBlog/{id}', [PostController::class, 'delete'])->name('post.delete');
+    Route::get('/membership/authors', [UserController::class, 'index'])->name('membership.authorsPage');
+    Route::get('membership/searchingPost', [UserController::class, 'searchingPost'])->name('searchingPost');
+    Route::get('membership/searchingAuthors', [UserController::class, 'searchingAuthor'])->name('searchingAuthors');
 });

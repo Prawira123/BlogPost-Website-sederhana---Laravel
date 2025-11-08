@@ -2,8 +2,15 @@
 
 @section('title-page', 'Posts')
 
-<x-navbar>
-</x-navbar>
+@auth
+    <x-navbar-member></x-navbar-member>
+@endauth
+
+@guest
+   <x-navbar>
+</x-navbar> 
+@endguest
+
 
 @section('username', $user->name)
 

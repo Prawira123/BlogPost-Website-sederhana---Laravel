@@ -6,6 +6,12 @@
     
 </x-navbar>
 
+@section('searchForm')
+  <x-searchingForm>Blog
+    <x-slot name="link">{{ route('searchingPost') }}</x-slot>
+  </x-searchingForm>
+@endsection
+
 @section('post')
 <div class="bg-gray-900 py-24 sm:py-32">
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
